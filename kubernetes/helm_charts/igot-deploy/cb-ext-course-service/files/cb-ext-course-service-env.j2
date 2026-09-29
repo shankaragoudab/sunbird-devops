@@ -146,7 +146,7 @@ event.read.endpoint=/event/v4/read
 domain.host=https://portal.qa.karmayogibharat.net/
 
 logging.level.root=WARN
-cb.plan.cache.ttl.minutes=60
+cb.plan.cache.ttl.minutes=2
 content.health.redis.db.index=12
 
 enrolment.dictionary.request={"request":{"userId":"%s","identifier":%s}}
@@ -165,7 +165,7 @@ lms.enrollment.details.url=/v3/user/enrol/courses/details
 
 cbplan.enriched.content.fields=identifier,name,description,contentType,duration,primaryCategory,status,createdOn,lastUpdatedOn
 cb.plan.v3.batch.size=5
-cb.plan.v3.cache.ttl.minutes=60
+cb.plan.v3.cache.ttl.minutes=2
 cb.plan.v3.caffine.cache.max.size=5000
 cb.plan.v3.redis.cache.ttl.seconds=3600
 cassandra.query.limit.primary.key=1
@@ -181,3 +181,21 @@ user.group.index=user_group_info
 elastic.required.field.user.group.json.path=/EsRequiredFields/EsRequiredFieldsUserGroup.json
 usergroup.edit.unauthorized.msg=You are not authorised to edit this user group. It belongs to a different organisation.
 usergroup.edit.missing.role.msg=You are not authorised to edit this user group. Only the MDO Leader or the group creator can make changes.
+
+cbplan.v4.keyspace=sunbird
+cbplan.v4.plan.table=cb_plan_v4
+cbplan.v4.usergroup.table=user_group_info
+cbplan.v4.lookup.by.org.table=cb_plan_v4_lookup_by_org
+cbplan.v4.lookup.by.all.org.table=cb_plan_v4_lookup_by_all_org
+cbplan.v4.lookup.by.ministryorstateid.table=cb_plan_v4_lookup_by_ministryorstateid
+cbplan.v4.content.lookup.table=cb_plan_v4_content_lookup
+usergroup.allow.multiple.root.org.ids=true
+cb.plan.v4.batch.size=5
+cb.plan.v4.cache.ttl.minutes=2
+cb.plan.v4.caffine.cache.max.size=5000
+
+cbplan.content.sync.async=true
+spring.kafka.cbplan.ca.link.topic.name={{env}}.trainingplan.ca.events
+spring.kafka.cbplan.ca.link.consumer.group.id=cbPlanCaLinkConsumerGroup
+
+cb.plan.v4.dictionary.redis.cache.ttl.seconds=3600
