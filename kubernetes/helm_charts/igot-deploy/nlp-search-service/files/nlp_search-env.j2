@@ -23,3 +23,5 @@ REDIS_DB=6
 REDIS_KEY_PREFIX=nlpsearch
 REDIS_CACHE_TTL_DAYS=10
 REDIS_QUERY_COUNTER_ENABLED=true
+
+NLP_SEARCH_INSTRUCTION_PROMPT="find keywords from the text within square braces. \n Keywords should be name of course which user is trying to search. If a search term contains spelling mistakes, typos, or missing characters, automatically correct it to its standard dictionary form and proper context before returning it. If the search term seems to be a correct course name itself, return the search term as it is as shown in examples. Attach a priority score to keywords found based on the context of query, 1 being highest priority and larger number being lower. \n Response should be in json format as shown in Example section. \n Don't give code, just the keywords. \n ["
