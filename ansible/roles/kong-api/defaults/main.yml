@@ -26280,24 +26280,6 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
-  - name: programCoordinatorBulkUpload
-    uris: "/program/coordinator/bulk-upload"
-    upstream_url: "{{ sb_cb_ext_service_url }}/program/coordinator/bulk-upload"
-    strip_uri: true
-    plugins:
-      - name: jwt
-      - name: cors
-      - "{{ statsd_pulgin }}"
-      - name: acl
-        config.whitelist:
-          - 'courseAccess'
-      - name: rate-limiting
-        config.policy: local
-        config.hour: "{{ medium_rate_limit_per_hour }}"
-        config.limit_by: credential
-      - name: request-size-limiting
-        config.allowed_payload_size: "{{ medium_request_size_limit }}"
-
 
   - name: extEnrollmentStatus
     uris: "{{ external_enrollment_prefix }}/v1/enrollment/status"
@@ -27513,9 +27495,9 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ medium_request_size_limit }}"
 
-  - name: getParticipantsV2
-    uris: "{{ course_service_prefix }}/v2/batch/participants/list"
-    upstream_url: "{{ lms_service_url }}/v2/batch/participants/list"
+  - name: AiItsmAuroraTrackingTicket
+    uris: "{{ ai_itsm_aurora_service_prefix }}/v1/resolution/tracking"
+    upstream_url: "{{ ai_itsm_aurora_service_url }}/api/v1/resolution/tracking"
     strip_uri: true
     plugins:
       - name: jwt
@@ -27523,7 +27505,26 @@ kong_apis:
       - "{{ statsd_pulgin }}"
       - name: acl
         config.whitelist:
-          - 'courseCreate'
+          - 'itsmAuroraAccess'
+          - 'itsmAccess'
+      - name: rate-limiting
+        config.policy: local
+        config.hour: "{{ medium_rate_limit_per_hour }}"
+        config.limit_by: credential
+      - name: request-size-limiting
+        config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+  - name: userGroupV2Search
+    uris: "{{ user_group_prefix }}/v1/searchV2"
+    upstream_url: "{{ cb_ext_course_service_url }}/usergroup/v1/searchV2"
+    strip_uri: true
+    plugins:
+      - name: jwt
+      - name: cors
+      - "{{ statsd_pulgin }}"
+      - name: acl
+        config.whitelist:
+          - 'dataCreate'
       - name: rate-limiting
         config.policy: local
         config.hour: "{{ medium_rate_limit_per_hour }}"
