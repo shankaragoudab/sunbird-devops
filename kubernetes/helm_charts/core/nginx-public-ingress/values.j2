@@ -473,6 +473,28 @@ proxyconfig: |-
       proxy_pass http://ui-proxies:3003;
     }
 
+   location /api/user/campaign/ {
+    if ($request_method = OPTIONS ) {
+            add_header Access-Control-Allow-Origin "https://igotkarmayogi.gov.in" ;
+            add_header Access-Control-Allow-Methods "POST";
+            add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id, Content-Encoding";
+            add_header Content-Length 0;
+            add_header Content-Type text/plain;
+            return 200;
+    }
+    proxy_cookie_path ~*^/.* /;
+    proxy_set_header X-Real-IP  $remote_addr;
+    proxy_set_header X-Forwarded-For $remote_addr;
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-Host $host;
+    proxy_set_header X-Forwarded-Server $host;
+    rewrite ^/api/(.*) /$1 break;
+    proxy_pass http://kong;
+    proxy_connect_timeout 10;
+    proxy_send_timeout 300;
+    proxy_read_timeout 300;
+}
+
   location ~ /api/forms/getFormById {
     # Enabling caching
     proxy_cache_key "$request_uri";
