@@ -473,12 +473,11 @@ proxyconfig: |-
       proxy_pass http://ui-proxies:3003;
     }
 
-   location /api/user/campaign/ {
+   location /api/user/campaign {
     if ($request_method = OPTIONS ) {
             add_header Access-Control-Allow-Origin "{{proto}}://{{ nginx_proxy_server_name }}" ;
             add_header Access-Control-Allow-Methods "POST";
             add_header Access-Control-Allow-Headers "Access-Control-Allow-Origin, Authorization, Content-Type, user-id, Content-Encoding";
-            add_header Content-Length 0;
             add_header Content-Type text/plain;
             return 200;
      }
