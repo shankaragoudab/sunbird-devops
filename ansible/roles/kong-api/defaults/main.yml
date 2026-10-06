@@ -27577,9 +27577,5 @@ kong_apis:
     plugins:
     - name: cors
     - "{{ statsd_pulgin }}"
-    - name: rate-limiting
-      config.policy: local
-      config.hour: "{{ large_rate_limit_per_hour }}"
-      config.limit_by: credential
     - name: request-size-limiting
       config.allowed_payload_size: "{{ small_request_size_limit }}"
