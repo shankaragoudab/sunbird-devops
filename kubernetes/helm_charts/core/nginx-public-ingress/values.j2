@@ -481,7 +481,7 @@ proxyconfig: |-
             add_header Content-Length 0;
             add_header Content-Type text/plain;
             return 200;
-    }
+     }
     proxy_cookie_path ~*^/.* /;
     proxy_set_header X-Real-IP  $remote_addr;
     proxy_set_header X-Forwarded-For $remote_addr;
@@ -493,7 +493,7 @@ proxyconfig: |-
     proxy_connect_timeout 10;
     proxy_send_timeout 300;
     proxy_read_timeout 300;
-}
+    }
 
   location ~ /api/forms/getFormById {
     # Enabling caching
