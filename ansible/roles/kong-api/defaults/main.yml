@@ -27534,42 +27534,6 @@ kong_apis:
       - name: request-size-limiting
         config.allowed_payload_size: "{{ small_request_size_limit }}"
 
-  - name: getParticipantsV2
-    uris: "{{ course_service_prefix }}/v2/batch/participants/list"
-    upstream_url: "{{ lms_service_url }}/v2/batch/participants/list"
-    strip_uri: true
-    plugins:
-      - name: jwt
-      - name: cors
-      - "{{ statsd_pulgin }}"
-      - name: acl
-        config.whitelist:
-          - 'courseCreate'
-      - name: rate-limiting
-        config.policy: local
-        config.hour: "{{ medium_rate_limit_per_hour }}"
-        config.limit_by: credential
-      - name: request-size-limiting
-        config.allowed_payload_size: "{{ small_request_size_limit }}"
-
-  - name: programCoordinatorBulkUpload
-    uris: "/program/coordinator/bulk-upload"
-    upstream_url: "{{ sb_cb_ext_service_url }}/program/coordinator/bulk-upload"
-    strip_uri: true
-    plugins:
-      - name: jwt
-      - name: cors
-      - "{{ statsd_pulgin }}"
-      - name: acl
-        config.whitelist:
-          - 'courseAccess'
-      - name: rate-limiting
-        config.policy: local
-        config.hour: "{{ medium_rate_limit_per_hour }}"
-        config.limit_by: credential
-      - name: request-size-limiting
-        config.allowed_payload_size: "{{ medium_request_size_limit }}"
-
   - name: addUserDetailsInCampaign
     uris: "{{ user_service_prefix }}/campaign/v1/register"
     upstream_url: "{{ cb_ext_userprofile_service_url }}/campaign/v1/register"
@@ -27577,5 +27541,11 @@ kong_apis:
     plugins:
     - name: cors
     - "{{ statsd_pulgin }}"
+    - name: rate-limiting
+      config.policy: local
+      config.hour: "{{ large_rate_limit_per_hour }}"
+      config.limit_by: credential
     - name: request-size-limiting
       config.allowed_payload_size: "{{ small_request_size_limit }}"
+
+
